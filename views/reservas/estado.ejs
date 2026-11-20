@@ -1,0 +1,37 @@
+<section>
+
+    <p class="seccion"><%= seccion %></p>
+    <h1><%= titulo %></h1>
+
+    <% if (errores.length > 0) { %>
+        <div role="alert" class="error">
+            <p>No se pudo cambiar el estado:</p>
+            <ul>
+                <% errores.forEach((error) => { %>
+                    <li><%= error %></li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
+
+    <p>Reserva <code><%= id %></code></p>
+
+    <%# El id va solo en la URL. Solo se envía "estado": los otros campos no se tocan. %>
+    <form action="/reservas/<%= id %>/estado" method="post" novalidate>
+
+        <label for="estado">Estado</label>
+        <select id="estado" name="estado" required>
+            <% const estadoValido = ["pendiente", "confirmada"].includes(valores.estado); %>
+            <% if (!estadoValido) { %>
+                <option value="" selected>Elegir un estado</option>
+            <% } %>
+            <option value="pendiente" <%= valores.estado === "pendiente" ? "selected" : "" %>>pendiente</option>
+            <option value="confirmada" <%= valores.estado === "confirmada" ? "selected" : "" %>>confirmada</option>
+        </select>
+
+        <button type="submit" class="boton">Guardar estado</button>
+        <a class="boton secundario" href="/reservas/<%= id %>">Cancelar</a>
+
+    </form>
+
+</section>

@@ -1,0 +1,35 @@
+<section>
+
+    <p class="seccion"><%= seccion %></p>
+    <h1><%= titulo %></h1>
+
+    <div role="alert" class="error">
+        <p>Esta acción es permanente: la reserva se elimina de la base de datos y no se puede deshacer.</p>
+    </div>
+
+    <dl class="datos">
+        <dt>ID</dt>
+        <dd><code><%= reserva.id %></code></dd>
+
+        <dt>Estudiante</dt>
+        <dd><%= reserva.estudiante %></dd>
+
+        <dt>Sala</dt>
+        <dd><%= reserva.sala %></dd>
+
+        <dt>Fecha</dt>
+        <dd><%= reserva.fecha %></dd>
+
+        <dt>Turno</dt>
+        <dd><%= reserva.turno %></dd>
+    </dl>
+
+    <%# El campo oculto solo evita errores accidentales: no autentica ni protege contra CSRF. %>
+    <form action="/reservas/<%= reserva.id %>/eliminar" method="post">
+        <input type="hidden" name="confirmar" value="si">
+        <button type="submit" class="boton">Sí, eliminar definitivamente</button>
+        <%# Cancelar es un enlace de lectura: no elimina ni modifica nada. %>
+        <a class="boton secundario" href="/reservas/<%= reserva.id %>">Cancelar</a>
+    </form>
+
+</section>
